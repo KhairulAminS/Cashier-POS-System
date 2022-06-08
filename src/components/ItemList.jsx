@@ -31,7 +31,7 @@ const ItemList = ({ items, onIncr, onDecr }) => {
             </div>
 
             <span className='col-span-1 text-center text-lg font-semibold'>
-                {items.cost}
+                {items.cost.toFixed(2)}
             </span>
 
         </div>

@@ -27,4 +27,39 @@ export const productsData = [
     ProductImage:
     'https://cdn.shopclues.com/images1/thumbnails/104158/320/320/148648730-104158193-1592481791.jpg',
   },
+  {
+    Id: 5,
+    ProductName: 'Coke',
+    Price: 2.55,
+    ProductImage:
+    'https://www.cnet.com/a/img/resize/1adf3cfd8591dfc884c822d98f282aedb2f0da92/hub/2015/12/23/d1f50141-5f9b-4550-a993-bc63ecac86f5/coca-cola.jpg?auto=webp&width=1092',
+  },
+  {
+    Id: 6,
+    ProductName: 'Coke2',
+    Price: 2.55,
+    ProductImage:
+    'https://www.cnet.com/a/img/resize/1adf3cfd8591dfc884c822d98f282aedb2f0da92/hub/2015/12/23/d1f50141-5f9b-4550-a993-bc63ecac86f5/coca-cola.jpg?auto=webp&width=1092',
+  },
+  {
+    Id: 7,
+    ProductName: 'Coke3',
+    Price: 2.55,
+    ProductImage:
+    'https://www.cnet.com/a/img/resize/1adf3cfd8591dfc884c822d98f282aedb2f0da92/hub/2015/12/23/d1f50141-5f9b-4550-a993-bc63ecac86f5/coca-cola.jpg?auto=webp&width=1092',
+  },
+  {
+    Id: 8,
+    ProductName: 'Coke4',
+    Price: 2.55,
+    ProductImage:
+    'https://www.cnet.com/a/img/resize/1adf3cfd8591dfc884c822d98f282aedb2f0da92/hub/2015/12/23/d1f50141-5f9b-4550-a993-bc63ecac86f5/coca-cola.jpg?auto=webp&width=1092',
+  },
+  {
+    Id: 9,
+    ProductName: 'Coke5',
+    Price: 2.55,
+    ProductImage:
+    'https://www.cnet.com/a/img/resize/1adf3cfd8591dfc884c822d98f282aedb2f0da92/hub/2015/12/23/d1f50141-5f9b-4550-a993-bc63ecac86f5/coca-cola.jpg?auto=webp&width=1092',
+  },
 ]
