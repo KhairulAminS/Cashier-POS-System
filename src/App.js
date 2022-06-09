@@ -117,18 +117,25 @@ const App = () => {
     }, [itemList])
 
     return (
-        <div className='flex w-screen h-fit 2xl:h-screen justify-evenly items-center sm:p-10'>
+        <div className='flex w-screen h-screen justify-evenly items-center sm:p-10'>
 
-            <div className='w-11/12 h-5/6 grid 2xl:grid-cols-6 2xl:grid-rows-1 grid-row-6 gap-5'>
+            <div className='h-full grid xl:grid-cols-6 xl:grid-rows-1 grid-row-2 grid-cols-1 gap-5'>
 
-                <div className='bg-white 2xl:col-span-3 2xl:row-span-1 3xl:col-span-2 row-span-2 justify-between items-center rounded-2xl p-10 drop-shadow-2xl z-10'>
+                <div className=' xl:col-span-3 xl:row-span-1 3xl:col-span-2 rounded-2xl p-10 drop-shadow-2xl z-10 grid grid-rows-5 bg-blue-400 h-full'>
 
-                    <h1 className='text-3xl font-bold text-center'>POS</h1>
-                    <h1 className='text-3xl font-bold text-center'>Cashier</h1>
+                    <div className='flex flex-col row-span-1 h-full justify-between'>
+                        <div>
+                            <h1 className='text-3xl font-bold text-center'>
+                                POS
+                            </h1>
+                            <h1 className='text-3xl font-bold text-center'>
+                                Cashier
+                            </h1>
+                        </div>
+                        <TableHeader />
+                    </div>
 
-                    <TableHeader />
-
-                    <div className=' min-h-[20rem] max-h-[20rem] w-11/12 mb-10 overflow-auto'>
+                    <div className=' row-span-2 overflow-auto border-t-4 border-gray-400'>
                         {itemList.map((items) => (
                             <ItemList
                                 items={items}
@@ -137,18 +144,20 @@ const App = () => {
                         ))}
                     </div>
 
-                    <Checkout
-                        checkoutInfo={checkoutInfo}
-                        onCancel={() => handleCancel()}
-                        onCheckout={() => handleCheckout()} />
+                    <div className='row-span-2'>
+                        <Checkout
+                            checkoutInfo={checkoutInfo}
+                            onCancel={() => handleCancel()}
+                            onCheckout={() => handleCheckout()} />
+                    </div>
                 </div>
 
 
-                <div className='rounded-2xl 2xl:col-span-3 2xl:row-span-1 3xl:col-span-4 row-start-1 bg-white drop-shadow-2xl p-10 space-y-8'>
+                <div className='rounded-2xl xl:col-span-3 xl:row-span-1 3xl:col-span-4 row-start-1 bg-white drop-shadow-2xl p-10 grid  grid-rows-products h-full'>
 
-                    <h1 className='text-3xl font-bold text-center'>Products</h1>
+                    <h1 className='text-3xl font-bold text-center bg-blue-500'>Products</h1>
 
-                    <div className='grid grid-cols-2 md:grid-cols-3 3xl:grid-cols-5 gap-6 p-10 2xl:h-[50rem] h-[45rem] overflow-y-auto'>
+                    <div className='flex flex-wrap row-span-2 p-10 h-full overflow-y-auto md:justify-between justify-center gap-5'>
                         {productsData.map((product) => (
                             <ClickableCard
                                 imgSrc={product.ProductImage}
