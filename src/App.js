@@ -119,7 +119,7 @@ const App = () => {
     return (
         <div className='flex w-screen h-fit 2xl:h-screen justify-evenly items-center sm:p-10'>
 
-            <div className=' w-11/12 h-5/6 grid 2xl:grid-cols-6 2xl:grid-rows-1 grid-row-6 dark:bg-main-dark-bg gap-5'>
+            <div className='w-11/12 h-5/6 grid 2xl:grid-cols-6 2xl:grid-rows-1 grid-row-6 gap-5'>
 
                 <div className='bg-white 2xl:col-span-3 2xl:row-span-1 3xl:col-span-2 row-span-2 justify-between items-center rounded-2xl p-10 drop-shadow-2xl z-10'>
 
@@ -166,9 +166,9 @@ const App = () => {
                 onClose={() => setIsOpen(false)} />
 
             <ToastContainer
-                toastClassName={() => 
+                toastClassName={() =>
                     "relative flex py-5 px-10 min-h-10 w-96 text-2xl bg-orange-500 rounded-xl font-black text-center justify-self-between"
-                }/>
+                } />
         </div>
     )
 }
