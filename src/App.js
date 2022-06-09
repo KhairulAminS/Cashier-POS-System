@@ -121,7 +121,7 @@ const App = () => {
 
             <div className='h-full grid xl:grid-cols-6 xl:grid-rows-1 grid-row-2 grid-cols-1 gap-5'>
 
-                <div className=' xl:col-span-3 xl:row-span-1 3xl:col-span-2 rounded-2xl p-10 drop-shadow-2xl z-10 grid grid-rows-5 bg-blue-400 h-full'>
+                <div className=' xl:col-span-3 xl:row-span-1 3xl:col-span-2 rounded-2xl p-10 drop-shadow-2xl z-10 grid grid-rows-5 bg-white h-full'>
 
                     <div className='flex flex-col row-span-1 h-full justify-between'>
                         <div>
@@ -155,7 +155,9 @@ const App = () => {
 
                 <div className='rounded-2xl xl:col-span-3 xl:row-span-1 3xl:col-span-4 row-start-1 bg-white drop-shadow-2xl p-10 grid  grid-rows-products h-full'>
 
-                    <h1 className='text-3xl font-bold text-center bg-blue-500'>Products</h1>
+                    <h1 className='text-3xl font-bold text-center '>
+                        Products
+                    </h1>
 
                     <div className='flex flex-wrap row-span-2 p-10 h-full overflow-y-auto md:justify-between justify-center gap-5'>
                         {productsData.map((product) => (
