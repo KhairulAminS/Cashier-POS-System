@@ -3,12 +3,16 @@ import React from 'react'
 const ClickableCard = ({ imgSrc, name, price, onClick }) => {
 
     return (
-        <button type='button' className='flex flex-col hover:drop-shadow-xl hover:scale-110 transition-all rounded-2xl active:brightness-90 max-w-5xl justify-self-center bg-white'
+        <button type='button' className='group rounded-xl hover:drop-shadow-xl hover:scale-110 active:brightness-90 transition-all overflow-hidden bg-red-200 justify-self-center xl:w-5/6 w-56 h-80'
             onClick={onClick}>
-            <img src={imgSrc} className='object-cover w-72 h-56 rounded-t-2xl'/>
-            <div className='p-5 flex flex-col items-start gap-2 3xl:flex-row 3xl:items-center 3xl:justify-between'>
-                <span className='text-xl font-semibold text-overflow overflow-hidden'>{name}</span>
-                <span className='text-xl'>{`RM ${price}`}</span>
+            <div className='w-full max-w-xl'>
+                <div className='relative aspect-square bg-red-200 '>
+                    <img src={imgSrc} className='absolute -top-10 w-full h-full object-cover object-center' />
+                </div>
+                <div className='p-5 flex flex-col items-start 3xl:flex-row 3xl:justify-between'>
+                    <span className='text-xl font-semibold text-overflow'>{name}</span>
+                    <span className='text-xl'>{`RM ${price}`}</span>
+                </div>
             </div>
         </button>
     )

@@ -3,18 +3,23 @@ import Checkout from './components/Checkout';
 import ClickableCard from './components/ClickableCard';
 import ItemList from './components/ItemList';
 import TableHeader from './components/TableHeader';
+import Modal from './components/Modal';
 import { productsData } from './data/dummyProduct';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/ReactToastify.min.css";
+
 
 const App = () => {
 
 
     const [itemList, setItemList] = useState([]);
+    const [isOpen, setIsOpen] = useState(false)
 
     const initialCheckoutInfo = {
         subtotal: 0,
         noOfItem: 0,
         tax: 6,
-        serviceCharge: null
+        serviceCharge: 0
     }
 
     const [checkoutInfo, setCheckoutInfo] = useState(initialCheckoutInfo)
@@ -79,6 +84,21 @@ const App = () => {
     }
 
     const handleCheckout = () => {
+        if (itemList.length !== 0) {
+            return setIsOpen(true);
+        }
+
+        // nnt letak toast untuk kalo cart empty
+        toast.warn('Your cart is empty!', {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
 
     }
 
@@ -86,7 +106,13 @@ const App = () => {
 
         const total = itemList.reduce((total, item) => total = total + item.cost, 0);
 
-        setCheckoutInfo(prevState => ({ ...prevState, subtotal: total }))
+        const totalItems = itemList.reduce((total, item) => total = total + item.quantity, 0);
+
+        setCheckoutInfo(prevState => ({
+            ...prevState,
+            subtotal: total,
+            noOfItem: totalItems,
+        }))
 
     }, [itemList])
 
@@ -102,7 +128,7 @@ const App = () => {
 
                     <TableHeader />
 
-                    <div className=' min-h-[20rem] max-h-[20rem] mb-10 overflow-auto'>
+                    <div className=' min-h-[20rem] max-h-[20rem] w-11/12 mb-10 overflow-auto'>
                         {itemList.map((items) => (
                             <ItemList
                                 items={items}
@@ -112,10 +138,9 @@ const App = () => {
                     </div>
 
                     <Checkout
-                        subtotal={checkoutInfo.subtotal}
+                        checkoutInfo={checkoutInfo}
                         onCancel={() => handleCancel()}
                         onCheckout={() => handleCheckout()} />
-
                 </div>
 
 
@@ -123,7 +148,7 @@ const App = () => {
 
                     <h1 className='text-3xl font-bold text-center'>Products</h1>
 
-                    <div className='grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-6 p-10 2xl:h-[50rem] h-[45rem] overflow-y-auto'>
+                    <div className='grid grid-cols-2 md:grid-cols-3 3xl:grid-cols-5 gap-6 p-10 2xl:h-[50rem] h-[45rem] overflow-y-auto'>
                         {productsData.map((product) => (
                             <ClickableCard
                                 imgSrc={product.ProductImage}
@@ -134,6 +159,16 @@ const App = () => {
                     </div>
                 </div>
             </div>
+
+            <Modal
+                checkoutInfo={checkoutInfo}
+                onOpen={isOpen}
+                onClose={() => setIsOpen(false)} />
+
+            <ToastContainer
+                toastClassName={() => 
+                    "relative flex py-5 px-10 min-h-10 w-96 text-2xl bg-orange-500 rounded-xl font-black text-center justify-self-between"
+                }/>
         </div>
     )
 }

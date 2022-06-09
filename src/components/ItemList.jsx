@@ -3,7 +3,7 @@ import { HiPlus, HiMinus } from 'react-icons/hi';
 
 const ItemList = ({ items, onIncr, onDecr }) => {
     return (
-        <div className='grid grid-cols-4 gap-5 p-5 items-center'>
+        <div className='grid grid-cols-4 gap-5 items-center py-5'>
 
             <span className='col-span-1 text-xl font-semibold'>
                 {items.productName}
