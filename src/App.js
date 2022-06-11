@@ -28,8 +28,10 @@ const App = () => {
 
     const handleClick = (id, name, price) => {
 
+        console.log(name)
+
         const isAdded = itemList.some(element => {
-            if (element.name === name) {
+            if (element.productName === name) {
                 return true;
             }
             return false;
@@ -37,6 +39,8 @@ const App = () => {
 
         const quantity = 1;
         const cost = parseFloat(price) * quantity;
+
+        console.log(isAdded)
 
         if (!isAdded) {
             setItemList([...itemList, {
@@ -91,7 +95,6 @@ const App = () => {
             return setIsOpen(true);
         }
 
-        // nnt letak toast untuk kalo cart empty
         toast.warn('Your cart is empty!', {
             position: "top-center",
             autoClose: 2000,
@@ -126,7 +129,7 @@ const App = () => {
         } catch (err) {
             alert(err.message)
         }
-    },[])
+    }, [])
 
     return (
         <div className='flex w-screen h-screen justify-evenly items-center sm:p-10'>
@@ -171,7 +174,17 @@ const App = () => {
                         Products
                     </h1>
 
-                    <div className='flex flex-wrap row-span-2 p-10 h-full overflow-y-auto md:justify-between justify-center gap-5'>
+                    {/* <div className='flex flex-wrap row-span-2 p-10 h-full overflow-y-auto md:justify-between justify-center gap-5 bg-red-300'>
+                        {productData.map((product) => (
+                            <ClickableCard
+                                imgSrc={product.image}
+                                name={product.name}
+                                price={product.price}
+                                onClick={() => handleClick(product.id, product.name, product.price)} />
+                        ))}
+                    </div> */}
+
+                    <div className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 row-span-2 p-10 h-fit max-h-4/6 overflow-y-auto md:justify-between justify-center gap-5 bg-red-300'>
                         {productData.map((product) => (
                             <ClickableCard
                                 imgSrc={product.image}
@@ -188,7 +201,7 @@ const App = () => {
                 itemList={itemList}
                 status={status}
                 onOpen={isOpen}
-                onClose={() => setIsOpen(false)} />
+                onClose={setIsOpen} />
 
             <ToastContainer
                 toastClassName={() =>

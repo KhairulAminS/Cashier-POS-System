@@ -7,7 +7,6 @@ const Modal = ({ checkoutInfo, itemList, status, onOpen, onClose }) => {
     const [totalCost, setTotalCost] = useState(0)
     const [paidAmount, setPaidAmount] = useState(0)
     const [change, setChange] = useState(0)
-    const [transactionInfo, setTransactionInfo] = useState()
     const [paymentMethod, setPaymentMethod] = useState("Cash")
 
     const options = [
@@ -79,8 +78,6 @@ const Modal = ({ checkoutInfo, itemList, status, onOpen, onClose }) => {
 
         const orderId = await axios.get("http://localhost:3001/api/orders/" + refNum)
 
-        console.log(orderId)
-
         itemList.map(async (item) => {
             const saveItem = await axios.post("http://localhost:3001/api/orders/items", {
                 order_id: generateBigInt(10),
@@ -91,18 +88,29 @@ const Modal = ({ checkoutInfo, itemList, status, onOpen, onClose }) => {
             })
         })
 
-        setTransactionInfo({
+        const transactionInfo = {
             order_id: generateBigInt(10),
             payment_method: paymentMethod,
             status: status,
             paid_amount_rm: paidAmount,
-            orders_id: (orderId.data + 1)
-        })
+            orders_id: orderId.data
+        }
 
-        console.log(orderId)
+        console.log(transactionInfo)
 
         const saveTransaction = await axios.post("http://localhost:3001/api/orders/transaction", transactionInfo)
 
+    }
+
+    const closeModal = () => {
+        onClose(false);
+        setPaidAmount(0);
+        setChange(0);
+    }
+
+    const handleSubmit = () => {
+        createOrder();
+        closeModal();
     }
 
     useEffect(() => {
@@ -122,7 +130,7 @@ const Modal = ({ checkoutInfo, itemList, status, onOpen, onClose }) => {
 
             <div
                 className='fixed w-full h-full bg-black opacity-70'
-                onClick={onClose}>
+                onClick={() => closeModal()}>
                 Overlay
             </div>
 
@@ -137,7 +145,7 @@ const Modal = ({ checkoutInfo, itemList, status, onOpen, onClose }) => {
                     <button
                         type='button'
                         className='justify-self-end self-start text-4xl text-gray-400 bg-white p-1 rounded-xl hover:drop-shadow-xl'
-                        onClick={onClose}>
+                        onClick={() => closeModal()}>
                         <MdOutlineClose />
                     </button>
 
@@ -164,7 +172,6 @@ const Modal = ({ checkoutInfo, itemList, status, onOpen, onClose }) => {
                                     className='border-b-4 outline-none w-full text-3xl font-semibold text-right'
                                     placeholder='Enter the paid amount'
                                     defaultValue={null}
-                                    value={paidAmount}
                                     onChange={(e) => {
                                         setPaidAmount(e.target.value)
                                     }}
@@ -229,14 +236,14 @@ const Modal = ({ checkoutInfo, itemList, status, onOpen, onClose }) => {
                         <button
                             type='button'
                             className='h-28 rounded-xl text-3xl font-semibold bg-red-400 self-stretch hover:drop-shadow-2xl hover:scale-110 active:brightness-75 transition-all'
-                            onClick={onClose}>
+                            onClick={() => closeModal()}>
                             Close
                         </button>
 
                         <button
                             type='button'
                             className='h-28 rounded-xl text-3xl font-semibold bg-green-400 self-stretch hover:drop-shadow-2xl hover:scale-110 active:brightness-75 transition-all'
-                            onClick={() => createOrder()}>
+                            onClick={() => handleSubmit()}>
                             Submit
                         </button>
 
