@@ -18,6 +18,7 @@ module.exports = {
         },
         gridTemplateRows: {
           'products': '50px minmax(0, 1fr)',
+          'checkout': '150px repeat(6, minmax(0, 1fr))',
         },
         gridRow: {
           'span-7': 'span 7 / span 7',

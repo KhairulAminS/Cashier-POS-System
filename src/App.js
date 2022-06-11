@@ -4,9 +4,9 @@ import ClickableCard from './components/ClickableCard';
 import ItemList from './components/ItemList';
 import TableHeader from './components/TableHeader';
 import Modal from './components/Modal';
-import { productsData } from './data/dummyProduct';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/ReactToastify.min.css";
+import axios from 'axios';
 
 
 const App = () => {
@@ -14,6 +14,8 @@ const App = () => {
 
     const [itemList, setItemList] = useState([]);
     const [isOpen, setIsOpen] = useState(false)
+    const [productData, setProductData] = useState([]);
+    const [status, setStatus] = useState("Pending")
 
     const initialCheckoutInfo = {
         subtotal: 0,
@@ -27,25 +29,26 @@ const App = () => {
     const handleClick = (id, name, price) => {
 
         const isAdded = itemList.some(element => {
-            if (element.productName === name) {
+            if (element.name === name) {
                 return true;
             }
             return false;
         });
 
         const quantity = 1;
-        const cost = price * quantity;
+        const cost = parseFloat(price) * quantity;
 
         if (!isAdded) {
             setItemList([...itemList, {
                 id: id,
                 productName: name,
-                price: price.toFixed(2),
+                price: parseFloat(price).toFixed(2),
                 quantity: quantity,
                 cost: cost
             }])
         }
     }
+
 
     const handleIncr = (item) => {
 
@@ -116,14 +119,23 @@ const App = () => {
 
     }, [itemList])
 
+    useEffect(async () => {
+        try {
+            const res = await axios.get("http://localhost:3001/api/products")
+            setProductData(res.data)
+        } catch (err) {
+            alert(err.message)
+        }
+    },[])
+
     return (
         <div className='flex w-screen h-screen justify-evenly items-center sm:p-10'>
 
             <div className='h-full grid xl:grid-cols-6 xl:grid-rows-1 grid-row-2 grid-cols-1 gap-5'>
 
-                <div className=' xl:col-span-3 xl:row-span-1 3xl:col-span-2 rounded-2xl p-10 drop-shadow-2xl z-10 grid grid-rows-5 bg-white h-full'>
+                <div className=' xl:col-span-3 xl:row-span-1 3xl:col-span-2 rounded-2xl p-10 drop-shadow-2xl z-10 grid grid-rows-checkout bg-white h-full'>
 
-                    <div className='flex flex-col row-span-1 h-full justify-between'>
+                    <div className='flex flex-col h-full justify-between'>
                         <div>
                             <h1 className='text-3xl font-bold text-center'>
                                 POS
@@ -135,7 +147,7 @@ const App = () => {
                         <TableHeader />
                     </div>
 
-                    <div className=' row-span-2 overflow-auto border-t-4 border-gray-400'>
+                    <div className='row-span-3 overflow-auto border-t-4 border-gray-400'>
                         {itemList.map((items) => (
                             <ItemList
                                 items={items}
@@ -144,7 +156,7 @@ const App = () => {
                         ))}
                     </div>
 
-                    <div className='row-span-2'>
+                    <div className='row-span-3'>
                         <Checkout
                             checkoutInfo={checkoutInfo}
                             onCancel={() => handleCancel()}
@@ -160,12 +172,12 @@ const App = () => {
                     </h1>
 
                     <div className='flex flex-wrap row-span-2 p-10 h-full overflow-y-auto md:justify-between justify-center gap-5'>
-                        {productsData.map((product) => (
+                        {productData.map((product) => (
                             <ClickableCard
-                                imgSrc={product.ProductImage}
-                                name={product.ProductName}
-                                price={product.Price.toFixed(2)}
-                                onClick={() => handleClick(product.Id, product.ProductName, product.Price,)} />
+                                imgSrc={product.image}
+                                name={product.name}
+                                price={product.price}
+                                onClick={() => handleClick(product.id, product.name, product.price)} />
                         ))}
                     </div>
                 </div>
@@ -173,6 +185,8 @@ const App = () => {
 
             <Modal
                 checkoutInfo={checkoutInfo}
+                itemList={itemList}
+                status={status}
                 onOpen={isOpen}
                 onClose={() => setIsOpen(false)} />
 
