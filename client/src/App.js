@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import Checkout from './components/Checkout';
-import ClickableCard from './components/ClickableCard';
-import ItemList from './components/ItemList';
-import TableHeader from './components/TableHeader';
-import Modal from './components/Modal';
-import { toast, ToastContainer } from 'react-toastify';
-import "react-toastify/ReactToastify.min.css";
+import React, { useEffect, useState, memo } from 'react'
+import { Cashier, Products, Modal, WarningToast, TransactionSim, OrderCreated, Paid } from './components/index'
 import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast'
 
 
 const App = () => {
@@ -16,6 +11,8 @@ const App = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [productData, setProductData] = useState([]);
     const [status, setStatus] = useState("Pending")
+    const [orderCreated, setOrderCreated] = useState(false)
+    const [refNum, setRefNum] = useState("")
 
     const initialCheckoutInfo = {
         subtotal: 0,
@@ -25,88 +22,6 @@ const App = () => {
     }
 
     const [checkoutInfo, setCheckoutInfo] = useState(initialCheckoutInfo)
-
-    const handleClick = (id, name, price) => {
-
-        console.log(name)
-
-        const isAdded = itemList.some(element => {
-            if (element.productName === name) {
-                return true;
-            }
-            return false;
-        });
-
-        const quantity = 1;
-        const cost = parseFloat(price) * quantity;
-
-        console.log(isAdded)
-
-        if (!isAdded) {
-            setItemList([...itemList, {
-                id: id,
-                productName: name,
-                price: parseFloat(price).toFixed(2),
-                quantity: quantity,
-                cost: cost
-            }])
-        }
-    }
-
-
-    const handleIncr = (item) => {
-
-        const newQuantity = item.quantity + 1;
-        const newCost = item.price * newQuantity;
-
-        setItemList(
-            itemList.map(items =>
-                items.id === item.id
-                    ? { ...items, quantity: newQuantity, cost: newCost }
-                    : items
-            ))
-
-    }
-
-    const handleDecr = (item) => {
-
-        const newQuantity = item.quantity - 1;
-        const newCost = item.price * newQuantity;
-
-        if (newQuantity === 0) {
-            setItemList(itemList.filter(items => items.id !== item.id))
-        } else {
-            setItemList(
-                itemList.map(items =>
-                    items.id === item.id
-                        ? { ...items, quantity: newQuantity, cost: newCost }
-                        : items
-                ))
-        }
-    }
-
-    const handleCancel = () => {
-        setItemList([]);
-        setCheckoutInfo(initialCheckoutInfo);
-    }
-
-    const handleCheckout = () => {
-        if (itemList.length !== 0) {
-            return setIsOpen(true);
-        }
-
-        toast.warn('Your cart is empty!', {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-        });
-
-    }
 
     useEffect(() => {
 
@@ -131,69 +46,57 @@ const App = () => {
         }
     }, [])
 
+    const warningToast = () => toast.custom((t) => <WarningToast t={t} />)
+
+    const updateStatus = async () => {
+
+        const orderId = await axios.get("http://localhost:3001/api/orders/" + refNum)
+
+        const updateOrder = await axios.put("http://localhost:3001/api/orders/" + orderId.data, {
+            status: "Paid"
+        })
+    }
+
+    const transactionSim = () => {
+        toast.custom((t) => <OrderCreated t={t} />, { duration: 2000 })
+
+        setTimeout(() => {
+            toast.custom((t) => <TransactionSim t={t} />)
+        }, 2000)
+
+        setOrderCreated(false)
+
+        setTimeout(() => {
+            updateStatus()
+            toast.custom((t) => <Paid t={t} />, { duration: 2000 })
+        }, 6000)
+    }
+
+    if (orderCreated) {
+        memo(transactionSim())
+    }
+
+    console.log("App is rendering")
+
     return (
         <div className='flex w-screen h-screen justify-evenly items-center sm:p-10'>
 
             <div className='h-full grid xl:grid-cols-6 xl:grid-rows-1 grid-row-2 grid-cols-1 gap-5'>
 
-                <div className=' xl:col-span-3 xl:row-span-1 3xl:col-span-2 rounded-2xl p-10 drop-shadow-2xl z-10 grid grid-rows-checkout bg-white h-full'>
+                <Cashier
+                    itemList={itemList}
+                    checkoutInfo={checkoutInfo}
+                    setItemList={setItemList}
+                    setCheckoutInfo={setCheckoutInfo}
+                    setIsOpen={setIsOpen}
+                    toast={warningToast}
+                />
 
-                    <div className='flex flex-col h-full justify-between'>
-                        <div>
-                            <h1 className='text-3xl font-bold text-center'>
-                                POS
-                            </h1>
-                            <h1 className='text-3xl font-bold text-center'>
-                                Cashier
-                            </h1>
-                        </div>
-                        <TableHeader />
-                    </div>
-
-                    <div className='row-span-3 overflow-auto border-t-4 border-gray-400'>
-                        {itemList.map((items) => (
-                            <ItemList
-                                items={items}
-                                onIncr={() => handleIncr(items)}
-                                onDecr={() => handleDecr(items)} />
-                        ))}
-                    </div>
-
-                    <div className='row-span-3'>
-                        <Checkout
-                            checkoutInfo={checkoutInfo}
-                            onCancel={() => handleCancel()}
-                            onCheckout={() => handleCheckout()} />
-                    </div>
-                </div>
-
-
-                <div className='rounded-2xl xl:col-span-3 xl:row-span-1 3xl:col-span-4 row-start-1 bg-white drop-shadow-2xl p-10 grid  grid-rows-products h-full'>
-
-                    <h1 className='text-3xl font-bold text-center '>
-                        Products
-                    </h1>
-
-                    {/* <div className='flex flex-wrap row-span-2 p-10 h-full overflow-y-auto md:justify-between justify-center gap-5 bg-red-300'>
-                        {productData.map((product) => (
-                            <ClickableCard
-                                imgSrc={product.image}
-                                name={product.name}
-                                price={product.price}
-                                onClick={() => handleClick(product.id, product.name, product.price)} />
-                        ))}
-                    </div> */}
-
-                    <div className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 row-span-2 p-10 h-fit max-h-4/6 overflow-y-auto md:justify-between justify-center gap-5 bg-red-300'>
-                        {productData.map((product) => (
-                            <ClickableCard
-                                imgSrc={product.image}
-                                name={product.name}
-                                price={product.price}
-                                onClick={() => handleClick(product.id, product.name, product.price)} />
-                        ))}
-                    </div>
-                </div>
+                <Products
+                    productData={productData}
+                    itemList={itemList}
+                    setItemList={setItemList}
+                />
             </div>
 
             <Modal
@@ -201,12 +104,13 @@ const App = () => {
                 itemList={itemList}
                 status={status}
                 onOpen={isOpen}
-                onClose={setIsOpen} />
+                setIsOpen={setIsOpen}
+                setRefNum={setRefNum}
+                setOrderCreated={setOrderCreated}
+                setItemList={setItemList}
+                setCheckoutInfo={setCheckoutInfo} />
 
-            <ToastContainer
-                toastClassName={() =>
-                    "relative flex py-5 px-10 min-h-10 w-96 text-2xl bg-orange-500 rounded-xl font-black text-center justify-self-between"
-                } />
+            <Toaster />
         </div>
     )
 }

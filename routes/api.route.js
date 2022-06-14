@@ -6,6 +6,7 @@ const prisma = new PrismaClient()
 const cors = require('cors');
 router.use(cors());
 
+//Get all products
 router.get('/products', async (req, res, next) => {
   try {
 
@@ -18,10 +19,76 @@ router.get('/products', async (req, res, next) => {
   }
 });
 
-router.get('/orders', async (req, res, next) => {
 
+//Get all orders including transaction and order items
+router.get('/orders/all', async (req, res, next) => {
+  try {
+    const orders = await prisma.orders.findMany({
+      include:{
+        transaction: true,
+        order_items: true
+      }
+    })
+
+    orders.map((order) => (
+      order.transaction.map((data) => (
+        data.order_id = data.order_id.toString()
+      )),
+
+      order.order_items.map((data) => (
+        data.order_id = data.order_id.toString()
+      ))
+    ))
+
+    res.json(orders)
+  } catch (error) {
+    next(error);
+  }
 });
 
+//Get all orders
+router.get('/orders', async (req, res, next) => {
+  try {
+    const orders = await prisma.orders.findMany({})
+
+    res.json(orders)
+  } catch (error) {
+    next(error);
+  }
+});
+
+//Get all transactions
+router.get('/orders/transactions', async (req, res, next) => {
+  try {
+    const transaction = await prisma.transaction.findMany({})
+
+    transaction.map((data) => (
+      data.order_id = data.order_id.toString()
+    ))
+
+    res.json(transaction)
+  } catch (error) {
+    next(error);
+  }
+});
+
+//Get all order items
+router.get('/orders/items', async (req, res, next) => {
+  try {
+    const items = await prisma.order_items.findMany({})
+
+    items.map((data) => (
+      data.order_id = data.order_id.toString()
+    ))
+
+    res.json(items)
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+//Get order by reference number
 router.get('/orders/:reference_no', async (req, res, next) => {
 
   try {
@@ -38,6 +105,8 @@ router.get('/orders/:reference_no', async (req, res, next) => {
   }
 });
 
+
+//Create new order
 router.post('/orders', async (req, res, next) => {
   try {
 
@@ -52,6 +121,8 @@ router.post('/orders', async (req, res, next) => {
   }
 });
 
+
+//Create new item
 router.post('/orders/items', async (req, res, next) => {
   try {
 
@@ -66,6 +137,8 @@ router.post('/orders/items', async (req, res, next) => {
   }
 });
 
+
+//Create new transaction
 router.post('/orders/transaction', async (req, res, next) => {
   try {
 
@@ -80,12 +153,35 @@ router.post('/orders/transaction', async (req, res, next) => {
   }
 });
 
-router.delete('/orders/:id', async (req, res, next) => {
 
-});
+//Update status in order and transaction
+router.put('/orders/:id', async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    const update = await prisma.orders.update({
+      where: {
+        id: id
+      },
+      data: {
+        status: req.body.status,
+        transaction : {
+          updateMany: {
+            where: {
+              status: "Pending"
+            },
+            data: {
+              status: req.body.status,
+            }
+          }
+        }
+      }
+    })
 
-router.patch('/orders/:id', async (req, res, next) => {
+    res.json("Order's status has been updated!")
 
+  } catch (error) {
+    next(error)
+  }
 });
 
 module.exports = router;

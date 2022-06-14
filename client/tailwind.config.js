@@ -22,6 +22,32 @@ module.exports = {
         },
         gridRow: {
           'span-7': 'span 7 / span 7',
+        },
+
+        animation: {
+          enter: 'enter 200ms ease-out',
+          slideIn: 'slide-in 0.5s cubic-bezier(.41,.73,.51,1.02)',
+          slideLeft: 'slide-left 3.5s linear forwards',
+          leave: 'leave 150ms ease-in forwards',
+          progress: 'progress 4s linear'
+        },
+        keyframes: {
+          enter: {
+            '0%': { transform: 'scale(0.9)', opacity: 0 },
+            '100%': { transform: 'scale(1)', opacity: 1 },
+          },
+          leave: {
+            '0%': { transform: 'scale(1)', opacity: 1 },
+            '100%': { transform: 'scale(0.9)', opacity: 0 },
+          },
+          'slide-in': {
+            '0%': { transform: 'translateY(-100%)' },
+            '100%': { transform: 'translateY(0)' },
+          },
+          'slide-left': {
+            '0%': { transform: 'translateX(0)' },
+            '100%': { transform: 'translateX(-100%)' },
+          },
         }
       },
     },
