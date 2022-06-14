@@ -33,14 +33,16 @@ const Products = ({ productData, itemList, setItemList }) => {
                 Products
             </h1>
 
-            <div className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 row-span-2 p-10 h-fit max-h-4/6 overflow-y-auto md:justify-between justify-center gap-5'>
-                {productData.map((product) => (
-                    <ClickableCard
-                        imgSrc={product.image}
-                        name={product.name}
-                        price={product.price}
-                        onClick={() => handleClick(product.id, product.name, product.price)} />
-                ))}
+            <div className='w-full h-full overflow-y-auto'>
+                <div className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 row-span-2 p-10 h-fit max-h-4/6 md:justify-between justify-center gap-5'>
+                    {productData.map((product) => (
+                        <ClickableCard
+                            imgSrc={product.image}
+                            name={product.name}
+                            price={product.price}
+                            onClick={() => handleClick(product.id, product.name, product.price)} />
+                    ))}
+                </div>
             </div>
         </div>
     )
