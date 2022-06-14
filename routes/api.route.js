@@ -105,6 +105,20 @@ router.get('/orders/:reference_no', async (req, res, next) => {
   }
 });
 
+//Create new product
+router.post('/products', async (req, res, next) => {
+  try {
+
+    const order = await prisma.product.create({
+      data: req.body
+    })
+
+    res.json("Product created!")
+
+  } catch (error) {
+    next(error)
+  }
+});
 
 //Create new order
 router.post('/orders', async (req, res, next) => {

@@ -2,6 +2,7 @@ import React, { useEffect, useState, memo } from 'react'
 import { Cashier, Products, Modal, WarningToast, TransactionSim, OrderCreated, Paid } from './components/index'
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast'
+import { products } from './data/dummyProduct'
 
 
 const App = () => {
@@ -22,6 +23,10 @@ const App = () => {
     }
 
     const [checkoutInfo, setCheckoutInfo] = useState(initialCheckoutInfo)
+
+    products.map(async (product) => (
+        await axios.post("/api/products", product)
+    ))
 
     useEffect(() => {
 
