@@ -1,70 +1,184 @@
-# Getting Started with Create React App
+<div id="top"></div>
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  
+  <h1>Cashier POS System</h1>
+  <p align="center">
+    <a href="https://github.com/KhairulAminShabudin/Cashier-POS-System"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+      </p>
+</div>
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-### `npm run eject`
+[![Product Name Screen Shot][product-screenshot]](https://github.com/KhairulAminShabudin/Cashier-POS-System)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+A simple web application that simulate the cashier point of sale system.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Built With
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* [React.js](https://reactjs.org/)
+* [Tailwind CSS](https://tailwindcss.com/)
+* [Express](https://expressjs.com/)
+* [Prisma](https://www.prisma.io/)
+* [PostgreSQL](https://www.postgresql.org/)
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+<!-- GETTING STARTED -->
+## Getting Started
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Prerequisites
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+#### ReactJS, Tailwind CSS, Express, Prisma
 
-### `npm run build` fails to minify
+- NodeJS
+- Any code editor e.g. VSC, Atom
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/KhairulAminShabudin/Cashier-POS-System
+   ```
+2. Download and Install the latest version of [PostgreSQL](https://www.postgresql.org/download/)
+3. Install all dependencies by running the code below in your VS Code terminal
+   ```node
+   npm run install-all
+   ```
+4. Create `.env` file in root folder and store the following informations
+   ```Js
+	 PORT=YOUR DESIRED RUN PORT
+    
+   DATABASE_URL="postgresql://YOUR_USERNAME:YOUR_PASSWORD@localhost:5432/DATABASE_NAME?schema=SCHEMA_NAME"
+   ```
+5. Setup for Prisma
+   1. Run the following command in your VS Code terminal
+   ```node
+   npx prisma migrate dev --name init
+   ```
+   2. [Optional] Open Prisma Studio by running the following in the terminal
+   ```node
+   npx prisma studio
+   ```
+6. Start the backend server
+   1. Run the following in VS Code terminal
+   
+   ```node
+   npm start
+   ```
+
+7. Launch web application
+   1. Go to the `client` directory in by running the following command in the terminal:
+   ```node
+   cd client
+   ``` 
+   2. Launch web server
+   ```node
+   npm start
+   ```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Khairul Amin Shabudin - khairulaminshabudin@gmail.com
+
+Project Link: [Cashier POS System](https://github.com/KhairulAminShabudin/Cashier-POS-System)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/KhairulAminShabudin/Cashier-POS-System.svg?style=for-the-badge
+[contributors-url]: https://github.com/KhairulAminShabudin/Cashier-POS-System/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/KhairulAminShabudin/Cashier-POS-System.svg?style=for-the-badge
+[forks-url]: https://github.com/KhairulAminShabudin/Cashier-POS-System/network/members
+[stars-shield]: https://img.shields.io/github/stars/KhairulAminShabudin/Cashier-POS-System.svg?style=for-the-badge
+[stars-url]: https://github.com/KhairulAminShabudin/Cashier-POS-System/stargazers
+[issues-shield]: https://img.shields.io/github/issues/KhairulAminShabudin/Cashier-POS-System.svg?style=for-the-badge
+[issues-url]: https://github.com/KhairulAminShabudin/Cashier-POS-System/issues
+[license-shield]: https://img.shields.io/github/license/KhairulAminShabudin/Cashier-POS-System.svg?style=for-the-badge
+[license-url]: https://github.com/KhairulAminShabudin/Cashier-POS-System/blob/master/LICENSE
+[product-screenshot]: client/public/screenshot.jpg
