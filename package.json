@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "engines":{
+    "node": "16.14.2",
+    "npm": "8.11.0"
+  },
   "scripts": {
     "start": "node app.js",
+    "build-prisma": "prisma generate",
+    "build-react": "cd client && npm install && npm run build",
+    "heroku-postbuild": "npm run build-react && npm run build-prisma",
     "dev": "nodemon app.js"
   },
   "keywords": [],

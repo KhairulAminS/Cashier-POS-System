@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-import toast, { Toaster } from 'react-hot-toast';
 
 const ActionButton = ({ checkoutInfo, totalCost, itemList, status, paymentMethod, paidAmount, closeModal, setRefNum, setOrderCreated, setItemList, setCheckoutInfo }) => {
 
@@ -45,7 +44,7 @@ const ActionButton = ({ checkoutInfo, totalCost, itemList, status, paymentMethod
 
         setRefNum(refNum)
 
-        const saveOrder = await axios.post("http://localhost:3001/api/orders", {
+        const saveOrder = await axios.post("/api/orders", {
             reference_no: refNum,
             tax: tax,
             service_charge: serviceCharge,
@@ -54,10 +53,10 @@ const ActionButton = ({ checkoutInfo, totalCost, itemList, status, paymentMethod
             status: status,
         })
 
-        const orderId = await axios.get("http://localhost:3001/api/orders/" + refNum)
+        const orderId = await axios.get("/api/orders/" + refNum)
 
         itemList.map(async (item) => {
-            const saveItem = await axios.post("http://localhost:3001/api/orders/items", {
+            const saveItem = await axios.post("/api/orders/items", {
                 order_id: generateBigInt(10),
                 cost_per_item: item.price,
                 product_name: item.productName,
@@ -74,7 +73,7 @@ const ActionButton = ({ checkoutInfo, totalCost, itemList, status, paymentMethod
             orders_id: orderId.data
         }
 
-        const saveTransaction = await axios.post("http://localhost:3001/api/orders/transaction", transactionInfo)
+        const saveTransaction = await axios.post("/api/orders/transaction", transactionInfo)
     }
 
     const handleSubmit = () => {

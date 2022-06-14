@@ -39,7 +39,7 @@ const App = () => {
 
     useEffect(async () => {
         try {
-            const res = await axios.get("http://localhost:3001/api/products")
+            const res = await axios.get("/api/products")
             setProductData(res.data)
         } catch (err) {
             alert(err.message)
@@ -50,9 +50,9 @@ const App = () => {
 
     const updateStatus = async () => {
 
-        const orderId = await axios.get("http://localhost:3001/api/orders/" + refNum)
+        const orderId = await axios.get("/api/orders/" + refNum)
 
-        const updateOrder = await axios.put("http://localhost:3001/api/orders/" + orderId.data, {
+        const updateOrder = await axios.put("/api/orders/" + orderId.data, {
             status: "Paid"
         })
     }
