@@ -12,6 +12,7 @@
     "build-prisma": "prisma generate",
     "build-react": "cd client && npm install && npm run build",
     "heroku-postbuild": "npm run build-react && npm run build-prisma",
+    "install-all": "npm install && cd client && npm install",
     "dev": "nodemon app.js"
   },
   "keywords": [],
