@@ -34,6 +34,7 @@
     <a href="https://github.com/KhairulAminShabudin/Cashier-POS-System"><strong>Explore the docs »</strong></a>
     <br />
     <br />
+    <a href="https://cashier-pos-system.herokuapp.com/">View Demo</a>
       </p>
 </div>
 
